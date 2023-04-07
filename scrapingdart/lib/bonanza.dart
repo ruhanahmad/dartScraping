@@ -24,7 +24,7 @@ Future<List<Product>> getProductsqq() async {
     final link = titleElement.attributes['href'];
     return 
     // sale;
-    Product(title:sale, link: sale, sale: link!);
+    Product(title:sale, link: link!, sale: link!);
   }).toList();
 
   return products;

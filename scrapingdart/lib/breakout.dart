@@ -3,13 +3,46 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
 
+class Product {
+  final String title;
+  final String link;
+  final String sale;
+ 
+
+  Product({required this.title, required this.link,required this.sale});
+}
+
+
 class CardProductWrapperList extends StatefulWidget {
+
+  String? name;
+  CardProductWrapperList({this.name});
+
   @override
   _CardProductWrapperListState createState() => _CardProductWrapperListState();
 }
 
 class _CardProductWrapperListState extends State<CardProductWrapperList> {
-  Future<List<Map<String, String>>> _getData() async {
+  Future<List<Product>> getProductsqq() async {
+  final response = await http.get(Uri.parse('https://bonanzasatrangi.com/collections/new-arrivals'));
+  final document = parser.parse(response.body);
+
+  final productElements = document.querySelectorAll('.grid-view_image .thisproduct.product-labels.rounded .lbl.on-sale ');
+  final products = productElements.map((labelElement) {
+      final sale = labelElement.text;
+                      print(sale);
+    final productElement = labelElement.parent!.parent!;
+    final titleElement = productElement?.querySelector('.grid-view_image .grid-view-item__link');
+    final title = titleElement!.text;
+    final link = titleElement.attributes['href'];
+    return 
+    // sale;
+    Product(title:title, link: link!, sale: sale);
+  }).toList();
+
+  return products;
+}
+  Future<List<Product>> _getData() async {
     final response = await http.get(Uri.parse('https://breakout.com.pk/collections/men-sale'));
 
     final document = parser.parse(response.body);
@@ -17,27 +50,40 @@ class _CardProductWrapperListState extends State<CardProductWrapperList> {
     final wrapperElements = document.querySelectorAll('.card-product__wrapper');
 
     final List<Map<String, String>> data = [];
+      final products = wrapperElements.map((labelElement) {
+     
+    final titleElement = labelElement.querySelector('.card__badge.badge-left.halo-productBadges.halo-productBadges--left.date-.date1-')!.children[0];
+    final mediaElement = labelElement.querySelector('.card-media.card-media--adapt.media--hover-effect.media--loading-effect');
+    final title = titleElement.text;
+    final link = mediaElement!.attributes['href'];
+    return 
+    // sale;
+    Product(title:link!, link: link!,sale: title);
+  }).toList();
 
-    for (final wrapperElement in wrapperElements) {
-      final badgeElement = wrapperElement.querySelector('.card__badge.badge-left.halo-productBadges.halo-productBadges--left.date-.date1-')!.children[0];
-      final mediaElement = wrapperElement.querySelector('.card-media.card-media--adapt.media--hover-effect.media--loading-effect');
+    // for (final wrapperElement in wrapperElements) {
+    //   final badgeElement = wrapperElement.querySelector('.card__badge.badge-left.halo-productBadges.halo-productBadges--left.date-.date1-')!.children[0];
+    //   final mediaElement = wrapperElement.querySelector('.card-media.card-media--adapt.media--hover-effect.media--loading-effect');
 
-      if (badgeElement != null && mediaElement != null) {
-        final badgeText = badgeElement.text.trim();
-        final mediaLink = mediaElement.attributes['href'];
+    //   if (badgeElement != null && mediaElement != null) {
+    //     final badgeText = badgeElement.text.trim();
+    //     final mediaLink = mediaElement.attributes['href'];
 
-        data.add({'badge': badgeText, 'link': mediaLink!});
-      }
-    }
+    //     data.add({'badge': badgeText, 'link': mediaLink!});
+    //   }
+    // }
 
-    return data;
+    return products;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Map<String, String>>>(
-        future: _getData(),
+
+      body:
+    
+       FutureBuilder<List<Product>>(
+        future: widget.name == "Breakout" ?_getData():widget.name == "Bonanza" ?getProductsqq():_getData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -46,8 +92,9 @@ class _CardProductWrapperListState extends State<CardProductWrapperList> {
                 final item = snapshot.data![index];
 
                 return ListTile(
-                  title: Text(item['badge']!),
-                  subtitle: Text(item['link']!),
+                  title: Text(item.title),
+                  subtitle:widget.name == "Breakout"? Text("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?Text("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):Text("https://breakout.com.pk/collections/men-sale" +item.link),
+                  trailing: Text(item.sale),
                 );
               },
             );
