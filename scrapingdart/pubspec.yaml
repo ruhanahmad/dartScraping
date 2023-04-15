@@ -37,6 +37,16 @@ dependencies:
   rename: 
   cloud_firestore: ^4.5.0
   get: ^4.6.5
+  url_launcher: ^6.1.10
+  latlng: ^0.2.1
+  flutter_map: ^1.1.1
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  google_maps_flutter: ^2.2.5
+  uuid: ^3.0.7
+  custom_marker: ^1.0.0
+  location_geocoder: ^1.0.5
+
 
 
   # The following adds the Cupertino Icons font to your application.

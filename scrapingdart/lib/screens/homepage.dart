@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:scrapingdart/AuthFirebase/auth.dart';
 import 'package:scrapingdart/breakout.dart';
-
+import 'package:scrapingdart/screens/mapGoogle.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class FirebaseGridView extends StatefulWidget {
@@ -35,6 +36,14 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
         Navigator.pop(context);
       },
       child: const Text('Logout'),
+    ),
+              ElevatedButton(
+      onPressed: () {
+        // authService.signOut();
+        Get.to (MapViewGoogle ());
+        // Navigator.pop(context);
+      },
+      child: const Text('MapView'),
     )
         ],
       ),

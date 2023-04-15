@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
+import 'package:url_launcher/url_launcher.dart';
 
 class Product {
   final String title;
@@ -93,8 +94,22 @@ class _CardProductWrapperListState extends State<CardProductWrapperList> {
 
                 return ListTile(
                   title: Text(item.title),
-                  subtitle:widget.name == "Breakout"? Text("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?Text("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):Text("https://breakout.com.pk/collections/men-sale" +item.link),
-                  trailing: Text(item.sale),
+                  subtitle:widget.name == "Breakout"
+                  ? Text("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?
+                  Text("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):
+                  Text("https://breakout.com.pk/collections/men-sale" +item.link),
+                  leading: Text(item.sale),
+                  trailing: ElevatedButton(
+      onPressed: () {
+        launchUrl(widget.name == "Breakout"?
+         Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?
+         Uri.parse("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):
+          Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link)
+         );
+      },
+      child: Text('Open URL'),
+    ),
+
                 );
               },
             );
