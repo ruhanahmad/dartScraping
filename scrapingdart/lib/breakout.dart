@@ -59,24 +59,32 @@ class _CardProductWrapperListState extends State<CardProductWrapperList> {
     final link = mediaElement!.attributes['href'];
     return 
     // sale;
-    Product(title:link!, link: link!,sale: title);
+    Product(title:title, link: link!,sale: title);
   }).toList();
 
-    // for (final wrapperElement in wrapperElements) {
-    //   final badgeElement = wrapperElement.querySelector('.card__badge.badge-left.halo-productBadges.halo-productBadges--left.date-.date1-')!.children[0];
-    //   final mediaElement = wrapperElement.querySelector('.card-media.card-media--adapt.media--hover-effect.media--loading-effect');
 
-    //   if (badgeElement != null && mediaElement != null) {
-    //     final badgeText = badgeElement.text.trim();
-    //     final mediaLink = mediaElement.attributes['href'];
-
-    //     data.add({'badge': badgeText, 'link': mediaLink!});
-    //   }
-    // }
 
     return products;
   }
 
+
+Future<List<Product>> getProducts() async {
+  final response = await http.get(Uri.parse('https://saya.pk/collections/jacquard-2023'));
+  final document = parser.parse(response.body);
+
+  final productElements = document.querySelectorAll('.inner-top .product-top .product-label .label.sale-label');
+  final products = productElements.map((labelElement) {
+      final sale = labelElement.text;
+                      print(sale);
+    final productElement = labelElement.parent!.parent!.parent;
+    final titleElement = productElement?.querySelector('.product-details .product-title');
+    final title = titleElement!.text;
+    final link = titleElement.attributes['href'];
+    return Product(title: title, link: link!, sale: sale);
+  }).toList();
+
+  return products;
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +92,7 @@ class _CardProductWrapperListState extends State<CardProductWrapperList> {
       body:
     
        FutureBuilder<List<Product>>(
-        future: widget.name == "Breakout" ?_getData():widget.name == "Bonanza" ?getProductsqq():_getData(),
+        future: widget.name == "Breakout" ?_getData():widget.name == "Bonanza" ?getProductsqq():widget.name == "Saya" ?getProducts():_getData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -95,15 +103,19 @@ class _CardProductWrapperListState extends State<CardProductWrapperList> {
                 return ListTile(
                   title: Text(item.title),
                   subtitle:widget.name == "Breakout"
-                  ? Text("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?
+                  ? Text("https://breakout.com.pk/collections/men-sale" +item.link):
+                  widget.name == "Bonanza"?
                   Text("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):
+                  widget.name == "Saya"?
+                  Text("https://saya.pk/" +item.link):
                   Text("https://breakout.com.pk/collections/men-sale" +item.link),
                   leading: Text(item.sale),
                   trailing: ElevatedButton(
       onPressed: () {
         launchUrl(widget.name == "Breakout"?
          Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?
-         Uri.parse("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):
+         Uri.parse("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):widget.name == "Saya"?
+         Uri.parse("https://saya.pk/" +item.link):
           Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link)
          );
       },
