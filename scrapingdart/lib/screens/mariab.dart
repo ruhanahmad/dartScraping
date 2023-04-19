@@ -14,7 +14,7 @@ class Product {
 
 
   Future<List<Product>> outfitterss() async {
-    final response = await http.get(Uri.parse('https://outfitters.com.pk/collections/men-special-prices'));
+    final response = await http.get(Uri.parse('https://www.mariab.pk/collections/all-sale'));
 
     final document = parser.parse(response.body);
   print(document);
@@ -36,20 +36,23 @@ class Product {
 
 
 
-final productWrappers = document.querySelectorAll('.card-wrapper.underline-links-hover');
+final productWrappers = document.querySelectorAll('.grid-product__content');
 
 
 
     final List<Map<String, String>> data = [];
     final products = productWrappers.map((labelss)  {
- final badgeItem =  labelss.querySelector('.card.card--standard.card--media ')!.children[0];
-  final badgeItemtext =  labelss.querySelector('.card.card--standard.card--media .card__content .card__information .card-information .price.price--on-sale .price__container .price__sale .price-item.price-item--sale.price-item--last')!.children[1];
- print(badgeItem.attributes["href"]);
+ final badgeLink =  labelss.querySelector('.grid-product__link')!.attributes["href"];
+  final badgeItemText =  labelss.querySelector('.grid-product__link .asas.grid-product__meta .grid-product__title.grid-product__title--body')!.text;
+  // final badgeItemtext =  labelss.querySelector('.grid-product__tag.grid-product__tag--sale .grid-product__link .asas.grid-product__meta .grid-product__title.grid-product__title--body .price-box-list-left')!.children[0].text;
+  final badgeItemsale =  labelss.querySelector('.grid-product__link .asas.grid-product__meta .price-box-list-left .grid-product__price--savings')!.text;
+// print(badgeHeading);
+
 //  if (badgeItem != null && badgeItem.text.isNotEmpty) {
 //       // print the text content of the badge item
 //       print(badgeItem.text);
 //     }
-     return Product(title: badgeItemtext.text, link: badgeItem.attributes["href"]!, sale: "badgeItem.text");
+     return Product(title: badgeItemText, link: badgeLink!, sale: badgeItemsale);
     }).toList();
     return products;
 
@@ -57,7 +60,7 @@ final productWrappers = document.querySelectorAll('.card-wrapper.underline-links
   }
   
 
-class karam extends StatelessWidget {
+class MariaB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Product>>(
@@ -84,8 +87,8 @@ class karam extends StatelessWidget {
               final product = products[index];
               return ListTile(
                 title: Text(product.title),
-                subtitle: Text(product.link),
-                trailing: Text(product.sale),
+                subtitle: Text(product.sale),
+                trailing: Text(product.link),
               );
             },
           ),

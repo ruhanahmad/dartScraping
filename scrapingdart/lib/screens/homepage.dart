@@ -4,8 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:scrapingdart/AuthFirebase/auth.dart';
 import 'package:scrapingdart/breakout.dart';
-import 'package:scrapingdart/screens/alkaram.dart';
+import 'package:scrapingdart/screens/khaadi.dart';
+
 import 'package:scrapingdart/screens/mapGoogle.dart';
+import 'package:scrapingdart/screens/mariab.dart';
+import 'package:scrapingdart/screens/outfitters.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -50,7 +53,7 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
         ElevatedButton(
       onPressed: ()async {
         // authService.signOut();
-     Get.to (karam ());
+     Get.to ( MariaB  ());
   //  await  alkaram();
         // Navigator.pop(context);
       },
