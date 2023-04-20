@@ -13,27 +13,11 @@ class Product {
 }
 
 
-  Future<List<Product>> outfitterss() async {
+  Future<List<Product>> sanasafinaz() async {
     final response = await http.get(Uri.parse('https://www.sanasafinaz.com/pk/sale.html'));
 
     final document = parser.parse(response.body);
   print(document);
-//  final productWrappers = document.querySelectorAll('.price__container');
-
-
-
-//     final List<Map<String, String>> data = [];
-//     final products = productWrappers.map((labelss)  {
-//  final badgeItem = labelss.querySelector('.price__sale .price-item.price-item--sale.price-item--last')!.children[1];
-//  print(badgeItem.text);
-// //  if (badgeItem != null && badgeItem.text.isNotEmpty) {
-// //       // print the text content of the badge item
-// //       print(badgeItem.text);
-// //     }
-//      return Product(title: "badgeItem.text", link: "badgeItem.text", sale: "badgeItem.text");
-//     }).toList();
-
-
 
 
 final productWrappers = document.querySelectorAll('.product.details.product-item-details');
@@ -46,13 +30,7 @@ final productWrappers = document.querySelectorAll('.product.details.product-item
  final badgeItem =  labelss.querySelector('.product.name.product-item-name .product-item-link')!.attributes["href"];
  final badgeItemSale =  labelss.querySelector('.price-box.price-final_price .sale-discount-percentage')!.text;
   final badgeItemText =  labelss.querySelector('.product.name.product-item-name .product-item-link')!.text;
-//   final badgeItemtext =  labelss.querySelector('.card.card--standard.card--media .card__content .card__information .card-information .price.price--on-sale .price__container .price__sale .price-item.price-item--sale.price-item--last')!.children[1];
-//   final badgeHeading =  labelss.querySelector('.card.card--standard.card--media .card__content .card__information .title-swatches-wrapper.flex .card__heading.h5 .product-link-main')!.text;
-// print(badgeHeading);
-//  print(badgeItem.attributes["href"]);
-//  if (badgeItem != null && badgeItem.text.isNotEmpty) {
-//       // print the text content of the badge item
-//       print(badgeItem.text);
+
 //     }
      return Product(title:badgeItemText, link: badgeItem!, sale: badgeItemSale);
     }).toList();
@@ -66,7 +44,7 @@ class SanaSafina extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Product>>(
-      future: outfitterss(),
+      future: sanasafinaz(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

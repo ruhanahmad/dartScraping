@@ -58,7 +58,7 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
         ElevatedButton(
       onPressed: ()async {
         // authService.signOut();
-     Get.to ( Alkaram  ());
+     Get.to ( gulAhmads  ());
   //  await  scrapeData();
         // Navigator.pop(context);
       },

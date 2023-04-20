@@ -13,26 +13,11 @@ class Product {
 }
 
 
-  Future<List<Product>> outfitterss() async {
+  Future<List<Product>> khadi() async {
     final response = await http.get(Uri.parse('https://pk.khaadi.com/sale.html'));
 
     final document = parser.parse(response.body);
   print(document);
-//  final productWrappers = document.querySelectorAll('.price__container');
-
-
-
-//     final List<Map<String, String>> data = [];
-//     final products = productWrappers.map((labelss)  {
-//  final badgeItem = labelss.querySelector('.price__sale .price-item.price-item--sale.price-item--last')!.children[1];
-//  print(badgeItem.text);
-// //  if (badgeItem != null && badgeItem.text.isNotEmpty) {
-// //       // print the text content of the badge item
-// //       print(badgeItem.text);
-// //     }
-//      return Product(title: "badgeItem.text", link: "badgeItem.text", sale: "badgeItem.text");
-//     }).toList();
-
 
 
 
@@ -66,7 +51,7 @@ class kahadii extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Product>>(
-      future: outfitterss(),
+      future: khadi(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

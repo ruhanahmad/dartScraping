@@ -18,22 +18,6 @@ class Product {
 
     final document = parser.parse(response.body);
   print(document);
-//  final productWrappers = document.querySelectorAll('.price__container');
-
-
-
-//     final List<Map<String, String>> data = [];
-//     final products = productWrappers.map((labelss)  {
-//  final badgeItem = labelss.querySelector('.price__sale .price-item.price-item--sale.price-item--last')!.children[1];
-//  print(badgeItem.text);
-// //  if (badgeItem != null && badgeItem.text.isNotEmpty) {
-// //       // print the text content of the badge item
-// //       print(badgeItem.text);
-// //     }
-//      return Product(title: "badgeItem.text", link: "badgeItem.text", sale: "badgeItem.text");
-//     }).toList();
-
-
 
 
 final productWrappers = document.querySelectorAll('.product-item-info');
