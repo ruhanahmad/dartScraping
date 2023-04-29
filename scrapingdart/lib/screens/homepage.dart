@@ -31,6 +31,22 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
     _stream = FirebaseFirestore.instance.collection('brands').snapshots();
   }
 
+  List assetImagess = [
+    "assets/images/limelight.jpg",
+    "assets/images/sanasafinaz.jpg",
+    "assets/images/khaadi.jpg",
+    "assets/images/breakout.jpg",
+    "assets/images/saya.jpg",
+    "assets/images/bonanza.jpg",
+    "assets/images/j.jpg",
+    "assets/images/outfitters.jpg",
+    "assets/images/mariab.jpg",
+    "assets/images/sapphire.jpg",
+    "assets/images/limelight.jpg",
+    "assets/images/alkaram.jpg",
+    "assets/images/nishat.jpg"
+   ];
+
   @override
   Widget build(BuildContext context) {
     AuthService authService = Get.put(AuthService());
@@ -91,25 +107,46 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
                 onTap: () {
                   // Handle button click here
                 },
-                child: Card(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        data['name'],
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+ color: Colors.blue.shade100,
+ borderRadius: BorderRadius.circular(30)
+
+                    ),
+                   
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        
+                        Container(height: 100,width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                            image: DecorationImage(image: AssetImage(assetImagess[index],),fit: BoxFit.fill)
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                         Get.to(CardProductWrapperList(name:data["name"]));
-                        },
-                        child: Text('Button'),
-                      ),
-                    ],
+                        
+                        ),
+                
+                        Text(
+                          data['name'],
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          
+                          onPressed: () {
+                           Get.to(CardProductWrapperList(name:data["name"]));
+                          },
+                          child: Text('Discounts'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

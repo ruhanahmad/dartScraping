@@ -18,20 +18,6 @@ class Product {
 
     final document = parser.parse(response.body);
   print(document);
-//  final productWrappers = document.querySelectorAll('.price__container');
-
-
-
-//     final List<Map<String, String>> data = [];
-//     final products = productWrappers.map((labelss)  {
-//  final badgeItem = labelss.querySelector('.price__sale .price-item.price-item--sale.price-item--last')!.children[1];
-//  print(badgeItem.text);
-// //  if (badgeItem != null && badgeItem.text.isNotEmpty) {
-// //       // print the text content of the badge item
-// //       print(badgeItem.text);
-// //     }
-//      return Product(title: "badgeItem.text", link: "badgeItem.text", sale: "badgeItem.text");
-//     }).toList();
 
 
 
@@ -48,14 +34,7 @@ final productWrappers = document.querySelectorAll('.card-wrapper');
     print("-------------------->+ ${badgeItemSsale}");
 
   
-  // final badgeItemtext =  labelss.querySelector('.grid-product__tag.grid-product__tag--sale .grid-product__link .asas.grid-product__meta .grid-product__title.grid-product__title--body .price-box-list-left')!.children[0].text;
-  
-// print(badgeHeading);
 
-//  if (badgeItem != null && badgeItem.text.isNotEmpty) {
-//       // print the text content of the badge item
-//       print(badgeItem.text);
-//     }
      return Product(title: badgeItemHeading, link: badgeLink!, sale: badgeItemSsale);
     }).toList();
     return products;

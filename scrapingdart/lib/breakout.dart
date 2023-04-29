@@ -362,66 +362,76 @@ Future<List<Product>> getProducts() async {
               itemBuilder: (context, index) {
                 final item = snapshot.data![index];
 
-                return ListTile(
-                  title: Text(item.title),
-                  subtitle:widget.name == "Breakout"
-                  ? Text("https://breakout.com.pk/collections/men-sale" +item.link):
-                  widget.name == "Bonanza"?
-                  Text("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):
-                  widget.name == "Saya"?
-                  Text("https://saya.pk/" +item.link):
-                  widget.name == "GulAhmad"?
-                  Text(item.link):
-                  widget.name == "Khadi" ?
-                   Text(item.link):
-                    widget.name == "LimeLight" ?
-                    Text("https://www.limelight.pk" +item.link):
-                    widget.name == "MariaB" ?
-Text("https://www.mariab.pk/collections/all-sale" +item.link):
-widget.name == "Outfitters" ?
-
-   Text( "https://outfitters.com.pk" +item.link):  
-   widget.name == "SanaSafinaz" ?
-                  Text( item.link):
-                  widget.name == "Sapphire" ?
-                   Text(item.link):
-                    widget.name == "J." ? 
-                    Text("No Sale"):
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ListTile(
+                      title: Text(item.title),
+                      subtitle:widget.name == "Breakout"
+                      ? Text("https://breakout.com.pk/collections/men-sale" +item.link):
+                      widget.name == "Bonanza"?
+                      Text("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):
+                      widget.name == "Saya"?
+                      Text("https://saya.pk/" +item.link):
+                      widget.name == "GulAhmad"?
+                      Text(item.link):
+                      widget.name == "Khadi" ?
+                       Text(item.link):
+                        widget.name == "LimeLight" ?
+                        Text("https://www.limelight.pk" +item.link):
+                        widget.name == "MariaB" ?
+                  Text("https://www.mariab.pk/collections/all-sale" +item.link):
+                  widget.name == "Outfitters" ?
+                  
+                     Text( "https://outfitters.com.pk" +item.link):  
+                     widget.name == "SanaSafinaz" ?
+                      Text( item.link):
+                      widget.name == "Sapphire" ?
+                       Text(item.link):
+                        widget.name == "J." ? 
+                        Text("No Sale"):
+                         widget.name == "Alkaram Studio" ?
+                         Text("No Sale"):
+                          widget.name == "NishatLinen" ?
+                          Text("No Sale"):
+                      Text("https://breakout.com.pk/collections/men-sale" +item.link),
+                      leading: CircleAvatar(child: Text(item.sale)),
+                      trailing: ElevatedButton(
+                        onPressed: () {
+                          launchUrl(widget.name == "Breakout"?
+                           Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?
+                           Uri.parse("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):widget.name == "Saya"?
+                           Uri.parse("https://saya.pk/" +item.link):widget.name == "GulAhmad"? 
+                           Uri.parse(item.link):widget.name == "Khadi" ?
+                            Uri.parse(item.link): widget.name == "LimeLight" ?
+                             Uri.parse("https://www.limelight.pk" +item.link):
+                            widget.name == "MariaB" ?
+                            Uri.parse("https://www.mariab.pk/collections/all-sale" +item.link):
+                            widget.name == "Outfitters" ?
+                            Uri.parse("https://outfitters.com.pk" +item.link):
+                             widget.name == "SanaSafinaz" ?
+                               Uri.parse(item.link):
+                    widget.name == "Sapphire" ?
+                    Uri.parse(item.link):
                      widget.name == "Alkaram Studio" ?
-                     Text("No Sale"):
-                      widget.name == "NishatLinen" ?
-                      Text("No Sale"):
-                  Text("https://breakout.com.pk/collections/men-sale" +item.link),
-                  leading: Text(item.sale),
-                  trailing: ElevatedButton(
-      onPressed: () {
-        launchUrl(widget.name == "Breakout"?
-         Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?
-         Uri.parse("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):widget.name == "Saya"?
-         Uri.parse("https://saya.pk/" +item.link):widget.name == "GulAhmad"? 
-         Uri.parse(item.link):widget.name == "Khadi" ?
-          Uri.parse(item.link): widget.name == "LimeLight" ?
-           Uri.parse("https://www.limelight.pk" +item.link):
-          widget.name == "MariaB" ?
-          Uri.parse("https://www.mariab.pk/collections/all-sale" +item.link):
-          widget.name == "Outfitters" ?
-          Uri.parse("https://outfitters.com.pk" +item.link):
-           widget.name == "SanaSafinaz" ?
-             Uri.parse(item.link):
-                widget.name == "Sapphire" ?
-                Uri.parse(item.link):
-                 widget.name == "Alkaram Studio" ?
-                 Uri.parse(""):
-                  widget.name == "J." ?
-                  Uri.parse(""):
-                   widget.name == "NishatLinen" ?
-                   Uri.parse(""):
-          Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link)
-         );
-      },
-      child: Text('Open URL'),
-    ),
-
+                     Uri.parse(""):
+                      widget.name == "J." ?
+                      Uri.parse(""):
+                       widget.name == "NishatLinen" ?
+                       Uri.parse(""):
+                            Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link)
+                           );
+                        },
+                        child: Text('Open URL'),
+                      ),
+                  
+                    ),
+                  ),
                 );
               },
             );

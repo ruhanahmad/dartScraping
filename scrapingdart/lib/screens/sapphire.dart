@@ -89,18 +89,7 @@ class Product {
 
 return productss;
 
-  // for (final divElement in divElements) {
-  //   final link = divElement.attributes['href'];
-  //   final spanElement = divElement.querySelector('span.cstm-sticker > .blink_me ');
-  //   //  final heading = divElement.querySelector('span.cstm-sticker')!.children[0];
-  //   final text2 = spanElement?.nextElementSibling?.text ?? "";
-  //   if (spanElement != null) {
-  //     final text = spanElement.text;
-  //     final head = text2;
-  //     print('$link: $text  $head' );
-  //   }
-    
-  // }
+
   
 }
   

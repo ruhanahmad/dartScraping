@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scrapingdart/AuthFirebase/auth.dart';
 import 'package:get/get.dart';
+
+import '../components/common/page_header.dart';
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -33,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Form(
           key: _formKey,
           child: ListView(
+          //  PageHeader(),
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             children: <Widget>[
               SizedBox(height: 80.0),

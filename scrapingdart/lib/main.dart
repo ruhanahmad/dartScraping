@@ -5,6 +5,7 @@ import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
 import 'package:scrapingdart/bonanza.dart';
 import 'package:scrapingdart/breakout.dart';
+import 'package:scrapingdart/components/login_page.dart';
 import 'package:scrapingdart/saya.dart';
 import 'package:scrapingdart/screens/login.dart';
 
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Firebase GridView Example',
-      home: LoginPage(),
+      home: 
+      LoginPage(),
+      // LoginPages(),
     );
   }
 }
