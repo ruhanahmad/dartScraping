@@ -47,6 +47,8 @@ dependencies:
   custom_marker: ^1.0.0
   location_geocoder: ^1.0.5
   email_validator: ^2.0.1
+  image_picker: ^0.8.7+4
+  firebase_storage: ^11.1.2
   
 
 

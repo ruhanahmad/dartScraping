@@ -8,6 +8,7 @@ import 'package:scrapingdart/breakout.dart';
 import 'package:scrapingdart/components/login_page.dart';
 import 'package:scrapingdart/saya.dart';
 import 'package:scrapingdart/screens/login.dart';
+import 'package:scrapingdart/screens/splashScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Firebase GridView Example',
       home: 
-      LoginPage(),
+    SplashScreen()  ,
+      // CardProductWrapperList()
       // LoginPages(),
     );
   }

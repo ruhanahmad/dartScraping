@@ -14,9 +14,10 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
  AuthService authService = AuthService();
  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  String? _name;
   String? _email, _password;
-   String? emailText,passwordText;
+   String? emailText,passwordText,nameText;
+     bool _isAdmin = true;
   @override
   Widget build(BuildContext context) {
    
@@ -32,20 +33,62 @@ class _LoginPageState extends State<LoginPage> {
         //     fit: BoxFit.cover,
         //   ),
         // ),
-        child: Form(
+        child: 
+        Form(
           key: _formKey,
-          child: ListView(
-          //  PageHeader(),
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            children: <Widget>[
-              SizedBox(height: 80.0),
+          child: Column(
+
+            children:[
+    
+         SizedBox(height: 80.0),
               Image.asset(
                 "assets/lo.png",
                 height: 150.0,
                 width: 150.0,
                 fit: BoxFit.contain,
               ),
+                   Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Radio(
+                  value: true,
+                  groupValue: _isAdmin,
+                  onChanged: (value) {
+                    setState(() {
+                      _isAdmin = value!;
+                    });
+                  },
+                ),
+                Text('Admin'),
+                Radio(
+                  value: false,
+                  groupValue: _isAdmin,
+                  onChanged: (value) {
+                    setState(() {
+                      _isAdmin = value!;
+                    });
+                  },
+                ),
+                Text('Worker'),
+              ],
+            ),
               SizedBox(height: 40.0),
+           _isLoginForm ? Text("") :   
+            TextFormField(
+               onChanged: (value) {
+                setState(() {
+               nameText    =   value;
+                });
+                  
+               },
+                decoration: InputDecoration(
+                  hintText: "Enter Name",
+                  prefixIcon: Icon(Icons.person),
+                ),
+                validator: (input) =>
+                    !input!.contains("") ? "Please enter a valid Name" : null,
+                onSaved: (input) => _name = input!,
+              ),
               TextFormField(
                onChanged: (value) {
                 setState(() {
@@ -85,11 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: _submit,
                       child: Text(_isLoginForm ? "Login" : "Sign up",
                           style: TextStyle(fontSize: 20.0)),
-                      // padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      // color: Colors.white,
-                      // shape: RoundedRectangleBorder(
-                      //   borderRadius: BorderRadius.circular(20.0),
-                      // ),
+           
                     ),
               SizedBox(height: 10.0),
               ElevatedButton(
@@ -108,7 +147,11 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Text("Forgot password?", style: TextStyle(color: Colors.white)),
               ),
-            ],
+            ]
+            
+      
+          //  PageHeader(),
+            
           ),
         ),
       ),
@@ -123,10 +166,18 @@ class _LoginPageState extends State<LoginPage> {
         _isLoading = true;
       });
       try {
-        if (_isLoginForm) {
+        if (_isLoginForm && _isAdmin) {
         authService.login(emailText!, passwordText!);
-        } else {
-         authService.signUp(emailText!, passwordText!);
+        }
+         if (_isLoginForm && _isAdmin ) {
+        authService.checksIFSignUp(emailText!, passwordText!);
+        }
+        
+           if (!_isLoginForm && _isAdmin ) {
+     Get.snackbar("Error", "You cant sign up as admin ");
+        }
+         else {
+         authService.signUp(emailText!, passwordText!,nameText!);
         }
       } catch (e) {
         _showSnackBar("Error: $e");

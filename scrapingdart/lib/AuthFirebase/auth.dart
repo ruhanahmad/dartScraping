@@ -1,15 +1,59 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:scrapingdart/screens/adminPanel.dart';
+import 'package:scrapingdart/screens/adminScreen.dart';
 import 'package:scrapingdart/screens/homepage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class AuthService extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+   Future   adminSignin(String email,String password)async{
+        try {
+      UserCredential userCredential =
+          await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+
+    
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+
+  }
+
+
+    Future  checksIFSignUp(String email,String password) async {
+    // have   =  "admin";
+    update();
+    await FirebaseFirestore.instance
+        .collection("admin")
+        .where('email', isEqualTo:email)
+        .get()
+        .then((QuerySnapshot querySnapshot) async{
+      if (querySnapshot.size > 0) {
+    //  emailSignupLogin(email,password);
+ await  adminSignin( email, password);
+        Get.to(()=>AdminScreen());
+      } else {
+        Get.snackbar("Not Successfull", "You are not admin");
+        // Data does not exist
+      }
+    });
+  }
+  
   
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
   // Sign Up with email and password
-  Future<String?> signUp(String email, String password) async {
+  Future<String?> signUp(String email, String password,String name) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -17,8 +61,20 @@ class AuthService extends GetxController {
         
       );
       print(email);
+      
+
+    // Save user data in Firestore
+    await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+      'email': email,
+      "name":name,
+      
+    });
+     
       Get.snackbar("Success", "User Signup  successfully");
+ Get.to(()=>FirebaseGridView ());
       return null;
+      
+      
       
       
     } on FirebaseAuthException catch (e) {
@@ -33,7 +89,9 @@ class AuthService extends GetxController {
       }
       return e.message;
     } catch (e) {
+          Get.snackbar("Error","Error Solving this Authentication");
       print(e);
+
       return e.toString();
     }
   }

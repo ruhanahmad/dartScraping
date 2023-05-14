@@ -15,19 +15,90 @@ class Product {
 
 
 
-class CardProductWrapperList extends StatefulWidget {
+class Filters extends StatefulWidget {
 
-  String? name;
-  CardProductWrapperList({this.name});
+
 
   @override
-  _CardProductWrapperListState createState() => _CardProductWrapperListState();
+  _FiltersState createState() => _FiltersState();
 }
 
 
-class _CardProductWrapperListState extends State<CardProductWrapperList> {
+class _FiltersState extends State<Filters> {
+        List disC = [];
+    List disCtwo = [];
+ 
+ 
+      Future<List<dynamic>> sanasafinazs() async {
+        disC.clear();
+    final response = await http.get(Uri.parse('https://www.sanasafinaz.com/pk/sale.html'));
+
+    final document = parser.parse(response.body);
+  print(document);
 
 
+final productWrappers = document.querySelectorAll('.product.details.product-item-details');
+
+
+
+    final List<Map<String, String>> data = [];
+   
+    final products = productWrappers.map((labelss)  {
+ 
+ final badgeItem =  labelss.querySelector('.product.name.product-item-name .product-item-link')!.attributes["href"];
+ final badgeItemSale =  labelss.querySelector('.price-box.price-final_price .sale-discount-percentage')!.text;
+  final badgeItemText =  labelss.querySelector('.product.name.product-item-name .product-item-link')!.text;
+
+     
+//     }
+ disC.add(badgeItemSale);
+  print(disC);
+    //  return Product(title:badgeItemText, link: badgeItem!, sale: badgeItemSale);
+    }).toList();
+    
+    // disC.add(badgeItemSale);
+    return products;
+
+
+  }
+
+
+
+
+    Future<List<Product>> outfittersss() async {
+    final response = await http.get(Uri.parse('https://outfitters.com.pk/collections/men-special-prices'));
+
+    final document = parser.parse(response.body);
+  print(document);
+
+
+
+final productWrappers = document.querySelectorAll('.card-wrapper.underline-links-hover');
+
+
+
+    final List<Map<String, String>> data = [];
+    final products = productWrappers.map((labelss)  {
+ final badgeItem =  labelss.querySelector('.card.card--standard.card--media ')!.children[0];
+  final badgeItemtext =  labelss.querySelector('.card.card--standard.card--media .card__content .card__information .card-information .price.price--on-sale .price__container .price__sale .price-item.price-item--sale.price-item--last')!.children[1];
+  final badgeHeading =  labelss.querySelector('.card.card--standard.card--media .card__content .card__information .title-swatches-wrapper.flex .card__heading.h5 .product-link-main')!.text;
+print(badgeHeading);
+ print(badgeItem.attributes["href"]);
+//  if (badgeItem != null && badgeItem.text.isNotEmpty) {
+
+  disCtwo.addAll([badgeItemtext]);
+//       // print the text content of the badge item
+//       print(badgeItem.text);
+//     }
+     return Product(title: badgeHeading, link: badgeItem.attributes["href"]!, sale: badgeItemtext.text);
+    }).toList();
+    return products;
+
+
+  }
+
+       
+       
      Future<List<Product>> NoSale() async {
   final url = 'https://pk.sapphireonline.pk/pages/eid-bundles';
   final response = await http.get(Uri.parse(url));
@@ -83,8 +154,7 @@ return productss;
   
 }
 
-    List disC = [];
-    List disCtwo = []; 
+   
       Future<List<Product>> sanasafinaz() async {
     final response = await http.get(Uri.parse('https://www.sanasafinaz.com/pk/sale.html'));
 
@@ -361,14 +431,14 @@ Future<List<Product>> getProducts() async {
 
       body:
     
-       FutureBuilder<List<Product>>(
-        future: widget.name == "Breakout" ?_getData():widget.name == "Bonanza" ?getProductsqq():widget.name == "Saya" ?getProducts():widget.name == "Bonanza" ?gulAhmad() :widget.name == "Khadi"? khadi(): widget.name == "LimeLight"? limeLight() : widget.name == "MariaB"?mariab():widget.name == "Outfitters" ? outfitterss():widget.name == "SanaSafinaz" ?sanasafinaz():widget.name == "SanaSafinaz" ?sanasafinaz():widget.name == "J."?NoSale(): widget.name == "Alkaram Studio"?NoSale() :widget.name == "NishatLinen" ?NoSale():  _getData(),
+       FutureBuilder<List<dynamic>>(
+        future: sanasafinazs(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-              itemCount: snapshot.data!.length,
+              itemCount:2,
               itemBuilder: (context, index) {
-                final item = snapshot.data![index];
+                // final item = snapshot.data![index];
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -379,64 +449,64 @@ Future<List<Product>> getProducts() async {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: ListTile(
-                      title: Text(item.title),
-                      subtitle:widget.name == "Breakout"
-                      ? Text("https://breakout.com.pk/collections/men-sale" +item.link):
-                      widget.name == "Bonanza"?
-                      Text("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):
-                      widget.name == "Saya"?
-                      Text("https://saya.pk/" +item.link):
-                      widget.name == "GulAhmad"?
-                      Text(item.link):
-                      widget.name == "Khadi" ?
-                       Text(item.link):
-                        widget.name == "LimeLight" ?
-                        Text("https://www.limelight.pk" +item.link):
-                        widget.name == "MariaB" ?
-                  Text("https://www.mariab.pk/collections/all-sale" +item.link):
-                  widget.name == "Outfitters" ?
+                      title: Text(disC.toString()),
+                  //     subtitle:widget.name == "Breakout"
+                  //     ? Text("https://breakout.com.pk/collections/men-sale" +item.link):
+                  //     widget.name == "Bonanza"?
+                  //     Text("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):
+                  //     widget.name == "Saya"?
+                  //     Text("https://saya.pk/" +item.link):
+                  //     widget.name == "GulAhmad"?
+                  //     Text(item.link):
+                  //     widget.name == "Khadi" ?
+                  //      Text(item.link):
+                  //       widget.name == "LimeLight" ?
+                  //       Text("https://www.limelight.pk" +item.link):
+                  //       widget.name == "MariaB" ?
+                  // Text("https://www.mariab.pk/collections/all-sale" +item.link):
+                  // widget.name == "Outfitters" ?
                   
-                     Text( "https://outfitters.com.pk" +item.link):  
-                     widget.name == "SanaSafinaz" ?
-                      Text( item.link):
-                      widget.name == "Sapphire" ?
-                       Text(item.link):
-                        widget.name == "J." ? 
-                        Text("No Sale"):
-                         widget.name == "Alkaram Studio" ?
-                         Text("No Sale"):
-                          widget.name == "NishatLinen" ?
-                          Text("No Sale"):
-                      Text("https://breakout.com.pk/collections/men-sale" +item.link),
-                      leading: CircleAvatar(child: Text(item.sale)),
-                      trailing: ElevatedButton(
-                        onPressed: () {
-                          launchUrl(widget.name == "Breakout"?
-                           Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?
-                           Uri.parse("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):widget.name == "Saya"?
-                           Uri.parse("https://saya.pk/" +item.link):widget.name == "GulAhmad"? 
-                           Uri.parse(item.link):widget.name == "Khadi" ?
-                            Uri.parse(item.link): widget.name == "LimeLight" ?
-                             Uri.parse("https://www.limelight.pk" +item.link):
-                            widget.name == "MariaB" ?
-                            Uri.parse("https://www.mariab.pk/collections/all-sale" +item.link):
-                            widget.name == "Outfitters" ?
-                            Uri.parse("https://outfitters.com.pk" +item.link):
-                             widget.name == "SanaSafinaz" ?
-                               Uri.parse(item.link):
-                    widget.name == "Sapphire" ?
-                    Uri.parse(item.link):
-                     widget.name == "Alkaram Studio" ?
-                     Uri.parse(""):
-                      widget.name == "J." ?
-                      Uri.parse(""):
-                       widget.name == "NishatLinen" ?
-                       Uri.parse(""):
-                            Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link)
-                           );
-                        },
-                        child: Text('Open URL'),
-                      ),
+                  //    Text( "https://outfitters.com.pk" +item.link):  
+                  //    widget.name == "SanaSafinaz" ?
+                  //     Text( item.link):
+                  //     widget.name == "Sapphire" ?
+                  //      Text(item.link):
+                  //       widget.name == "J." ? 
+                  //       Text("No Sale"):
+                  //        widget.name == "Alkaram Studio" ?
+                  //        Text("No Sale"):
+                  //         widget.name == "NishatLinen" ?
+                  //         Text("No Sale"):
+                  //     Text("https://breakout.com.pk/collections/men-sale" +item.link),
+                      // leading: CircleAvatar(child: Text(item.sale)),
+                    //   trailing: ElevatedButton(
+                    //     onPressed: () {
+                    //       launchUrl(widget.name == "Breakout"?
+                    //        Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link):widget.name == "Bonanza"?
+                    //        Uri.parse("https://bonanzasatrangi.com/collections/new-arrivals" +item.link):widget.name == "Saya"?
+                    //        Uri.parse("https://saya.pk/" +item.link):widget.name == "GulAhmad"? 
+                    //        Uri.parse(item.link):widget.name == "Khadi" ?
+                    //         Uri.parse(item.link): widget.name == "LimeLight" ?
+                    //          Uri.parse("https://www.limelight.pk" +item.link):
+                    //         widget.name == "MariaB" ?
+                    //         Uri.parse("https://www.mariab.pk/collections/all-sale" +item.link):
+                    //         widget.name == "Outfitters" ?
+                    //         Uri.parse("https://outfitters.com.pk" +item.link):
+                    //          widget.name == "SanaSafinaz" ?
+                    //            Uri.parse(item.link):
+                    // widget.name == "Sapphire" ?
+                    // Uri.parse(item.link):
+                    //  widget.name == "Alkaram Studio" ?
+                    //  Uri.parse(""):
+                    //   widget.name == "J." ?
+                    //   Uri.parse(""):
+                    //    widget.name == "NishatLinen" ?
+                    //    Uri.parse(""):
+                    //         Uri.parse("https://breakout.com.pk/collections/men-sale" +item.link)
+                    //        );
+                    //     },
+                    //     child: Text('Open URL'),
+                    //   ),
                   
                     ),
                   ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:scrapingdart/AuthFirebase/auth.dart';
 import 'package:scrapingdart/breakout.dart';
 import 'package:scrapingdart/screens/alkaram.dart';
+import 'package:scrapingdart/screens/filter.dart';
 import 'package:scrapingdart/screens/gulahmad.dart';
 import 'package:scrapingdart/screens/khaadi.dart';
 import 'package:scrapingdart/screens/limelight.dart';
@@ -52,7 +55,7 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
     AuthService authService = Get.put(AuthService());
     return Scaffold(
       appBar: AppBar(
-       
+         automaticallyImplyLeading: false,
         title: Text('Brands'),
         actions: [
           ElevatedButton(
@@ -74,7 +77,7 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
         ElevatedButton(
       onPressed: ()async {
         // authService.signOut();
-     Get.to ( gulAhmads  ());
+     Get.to ( Filters   ());
   //  await  scrapeData();
         // Navigator.pop(context);
       },
@@ -82,7 +85,9 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
     ),
         ],
       ),
-      body: StreamBuilder<QuerySnapshot>(
+      body: 
+      
+      StreamBuilder<QuerySnapshot>(
         stream: _stream,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -102,7 +107,7 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
             ),
             itemBuilder: (context, index) {
               var data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-
+ int randomNumber = Random().nextInt(41) + 10;
               return GestureDetector(
                 onTap: () {
                   // Handle button click here
@@ -121,7 +126,18 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: Colors.red,
+                            ),
+                          
+                            child: Center(child: Text("50%",style: TextStyle(color: Colors.white),))),
+                        ),
                         Container(height: 100,width: 100,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
