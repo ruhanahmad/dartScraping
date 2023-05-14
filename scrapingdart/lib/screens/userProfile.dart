@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class RecordListPage extends StatelessWidget {
+class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Records'),
+        title: Text('Profile'),
         backgroundColor: Colors.orange,
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -34,29 +34,13 @@ class RecordListPage extends StatelessWidget {
               String name = document["name"];
               String description = document['email'];
 
-              return Dismissible(
-                key: Key(id),
-                onDismissed: (direction) {
-                  FirebaseFirestore.instance
-                      .collection('users')
-                     .doc(id)
-                      .delete();
-                },
-                background: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    color: Colors.red,
-                    child: Icon(Icons.delete),
-                    alignment: Alignment.centerRight,
-                  ),
-                ),
-                child: Container(
-                  color: Colors.black,
-                  child: ListTile(
-                  
-                    title: Text(name,style: TextStyle(color: Colors.orange),),
-                    subtitle: Text(description,style: TextStyle(color: Colors.orange),),
-                  ),
+              return 
+              Container(
+                color: Colors.black,
+                child: ListTile(
+                
+                  title: Text(name,style: TextStyle(color: Colors.orange),),
+                  subtitle: Text(description,style: TextStyle(color: Colors.orange),),
                 ),
               );
             },

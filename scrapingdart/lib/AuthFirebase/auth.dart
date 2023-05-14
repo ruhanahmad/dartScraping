@@ -5,6 +5,8 @@ import 'package:scrapingdart/screens/adminScreen.dart';
 import 'package:scrapingdart/screens/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../screens/userDashboard.dart';
 class AuthService extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
    Future   adminSignin(String email,String password)async{
@@ -26,6 +28,27 @@ class AuthService extends GetxController {
     }
 
   }
+
+
+    Future  checksIFLogin(String email,String password) async {
+    // have   =  "admin";
+    update();
+    await FirebaseFirestore.instance
+        .collection("users")
+        .where('email', isEqualTo:email)
+        .get()
+        .then((QuerySnapshot querySnapshot) async{
+      if (querySnapshot.size > 0) {
+    //  emailSignupLogin(email,password);
+ await  adminSignin( email, password);
+        Get.to(()=>UserDashboard ());
+      } else {
+        Get.snackbar("Not Successfull", "Sign up first");
+        // Data does not exist
+      }
+    });
+  }
+
 
 
     Future  checksIFSignUp(String email,String password) async {
@@ -71,7 +94,7 @@ class AuthService extends GetxController {
     });
      
       Get.snackbar("Success", "User Signup  successfully");
- Get.to(()=>FirebaseGridView ());
+ Get.to(()=>UserDashboard ());
       return null;
       
       

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrapingdart/screens/adminLogin.dart';
 import 'package:scrapingdart/screens/login.dart';
 import 'package:scrapingdart/screens/loginOnly.dart';
 import 'package:scrapingdart/screens/signup.dart';
@@ -43,6 +44,7 @@ class _LoginSignsState extends State<LoginSigns> {
       ),
       child: Text('Login'),
     ),
+
     ElevatedButton(
       onPressed: () {
       
@@ -56,10 +58,11 @@ class _LoginSignsState extends State<LoginSigns> {
       ),
       child: Text('Sign up'),
     ),
+
         ElevatedButton(
       onPressed: () {
       
-       Get.to(SignUp());
+       Get.to(AdminLoginScreen());
 
       },
       style: ElevatedButton.styleFrom(

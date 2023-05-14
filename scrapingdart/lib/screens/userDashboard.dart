@@ -4,19 +4,22 @@ import 'package:get/get.dart';
 
 import 'package:scrapingdart/main.dart';
 import 'package:scrapingdart/screens/adminPanel.dart';
+import 'package:scrapingdart/screens/homepage.dart';
 import 'package:scrapingdart/screens/loginSigns.dart';
+import 'package:scrapingdart/screens/mapGoogle.dart';
 import 'package:scrapingdart/screens/userList.dart';
+import 'package:scrapingdart/screens/userProfile.dart';
 
 
 
-class AdminScreen extends StatefulWidget {
-  const AdminScreen({super.key});
+class UserDashboard extends StatefulWidget {
+  const UserDashboard({super.key});
 
   @override
-  State<AdminScreen> createState() => _AdminScreenState();
+  State<UserDashboard> createState() => _UserDashboardState();
 }
 
-class _AdminScreenState extends State<AdminScreen> {
+class _UserDashboardState extends State<UserDashboard> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,7 +34,7 @@ class _AdminScreenState extends State<AdminScreen> {
         color: Colors.orange,
         
         child: Column(children: [
-  Text("Welcome to Admin Panel",style: TextStyle(color: Colors.white,fontSize: 20),),
+  Text("Welcome to User Panel",style: TextStyle(color: Colors.white,fontSize: 20),),
         SizedBox(height: 15,),
         Container(height: 200,
         width: MediaQuery.of(context).size.width,
@@ -48,7 +51,7 @@ SizedBox(height: 20,),
           
           GestureDetector(
             onTap: () {
-              Get.to(RecordListPage());
+         Get.to( UserProfile()) ;  
             },
             child: Container( 
               height: 220,
@@ -57,7 +60,7 @@ SizedBox(height: 20,),
             child: Column(children: [
   Icon(Icons.verified_user,size: 150,),
        
-            Center(child: Text("Users"))
+            Center(child: Text("Profile"))
             
             ],),
             ),
@@ -65,46 +68,67 @@ SizedBox(height: 20,),
         
              GestureDetector(
             onTap: () {
-              Get.to(Addbrands());
+             Get.to (MapViewGoogle ());
             },
             child: Container( 
               height: 220,
               width: 220,
             color: Colors.greenAccent,
             child: Column(children: [
-  Icon(Icons.badge,size: 150,),
+  Icon(Icons.location_city,size: 150,),
        
-            Center(child: Text("Brands"))
+            Center(child: Text("Discounts"))
             
             ],),
             ),
           ),
         ],),
         SizedBox(height: 20,),
-    //  Container(height: 200,width: 400,color: Colors.yellow,child: Text("Logout"),),
-           GestureDetector(
+
+           Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+          
+          GestureDetector(
+            onTap: () {
+              Get.to(FirebaseGridView());
+            },
+            child: Container( 
+              height: 220,
+              width: 220,
+            color: Colors.greenAccent,
+            child: Column(children: [
+  Icon(Icons.branding_watermark,size: 150,),
+       
+            Center(child: Text("Discount Brands"))
+            
+            ],),
+            ),
+          ),
+        
+             GestureDetector(
             onTap: () async{
-    
-  await FirebaseAuth.instance.signOut();
+          await FirebaseAuth.instance.signOut();
    Get.to(LoginSigns());
 
             },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container( 
-                height: 100,
-                width: MediaQuery.of(context).size.width,
-              color: Colors.greenAccent,
-              child: Column(children: [
-                SizedBox(height: 20,),
-              Icon(Icons.logout,size: 50,),
-                   
-              Center(child: Text("Logout"))
-              
-              ],),
-              ),
+            child: Container( 
+              height: 220,
+              width: 220,
+            color: Colors.greenAccent,
+            child: Column(children: [
+  Icon(Icons.logout,size: 150,),
+       
+            Center(child: Text("Logout"))
+            
+            ],),
             ),
           ),
+        ],),
+
+
+
+
       ],),)
       ),
     );

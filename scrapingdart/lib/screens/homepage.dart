@@ -54,36 +54,38 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
   Widget build(BuildContext context) {
     AuthService authService = Get.put(AuthService());
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.orange,
          automaticallyImplyLeading: false,
         title: Text('Brands'),
-        actions: [
-          ElevatedButton(
-      onPressed: () {
-        authService.signOut();
-        Navigator.pop(context);
-      },
-      child: const Text('Logout'),
-    ),
-              ElevatedButton(
-      onPressed: () {
-        // authService.signOut();
-        Get.to (MapViewGoogle ());
-        // Navigator.pop(context);
-      },
-      child: const Text('MapView'),
-    ),
+  //       actions: [
+  //         ElevatedButton(
+  //     onPressed: () {
+  //       authService.signOut();
+  //       Navigator.pop(context);
+  //     },
+  //     child: const Text('Logout'),
+  //   ),
+  //             ElevatedButton(
+  //     onPressed: () {
+  //       // authService.signOut();
+  //       Get.to (MapViewGoogle ());
+  //       // Navigator.pop(context);
+  //     },
+  //     child: const Text('MapView'),
+  //   ),
    
-        ElevatedButton(
-      onPressed: ()async {
-        // authService.signOut();
-     Get.to ( Filters   ());
-  //  await  scrapeData();
-        // Navigator.pop(context);
-      },
-      child: const Text('Checking'),
-    ),
-        ],
+  //       ElevatedButton(
+  //     onPressed: ()async {
+  //       // authService.signOut();
+  //    Get.to ( Filters   ());
+  // //  await  scrapeData();
+  //       // Navigator.pop(context);
+  //     },
+  //     child: const Text('Checking'),
+  //   ),
+  //       ],
       ),
       body: 
       
@@ -118,7 +120,7 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
                     height: 50,
                     width: 50,
                     decoration: BoxDecoration(
- color: Colors.blue.shade100,
+ color: Colors.orange,
  borderRadius: BorderRadius.circular(30)
 
                     ),
@@ -141,7 +143,13 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
                         Container(height: 100,width: 100,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                            image: DecorationImage(image: AssetImage(assetImagess[index],),fit: BoxFit.fill)
+                            image: 
+                            DecorationImage(
+                              image: 
+                              
+                            NetworkImage(data["image"],),fit: BoxFit.cover,
+                            )    
+                              
                         ),
                         
                         ),
@@ -155,6 +163,9 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
                         ),
                         SizedBox(height: 10),
                         ElevatedButton(
+                           style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+  ),
                           
                           onPressed: () {
                            Get.to(CardProductWrapperList(name:data["name"]));

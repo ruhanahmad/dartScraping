@@ -120,8 +120,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       try {
        
-         
-         authService.login(emailText!, passwordText!);
+         authService.checksIFLogin(emailText!, passwordText!);
+       
         
       } catch (e) {
   Get.snackbar("Error", "Error signing up");

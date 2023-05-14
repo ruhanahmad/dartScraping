@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrapingdart/AuthFirebase/auth.dart';
 import 'package:scrapingdart/screens/login.dart';
-import 'package:scrapingdart/screens/loginOnly.dart';
+import 'signup.dart';
 
 
-
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class AdminLoginScreen extends StatefulWidget {
+  const AdminLoginScreen({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<AdminLoginScreen> createState() => _AdminLoginScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _AdminLoginScreenState extends State<AdminLoginScreen> {
    bool _isLoginForm = true;
   bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
@@ -43,28 +42,28 @@ class _SignUpState extends State<SignUp> {
                       ),
       
                    SizedBox(height: 120,),
-                    Container(
-                       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color:    Colors.orange,
-        ),
-                      child: TextFormField(
-                                   onChanged: (value) {
-                                    setState(() {
-                                   nameText    =   value;
-                                    });
+        //             Container(
+        //                decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(10),
+        //   color:    Colors.orange,
+        // ),
+        //               child: TextFormField(
+        //                            onChanged: (value) {
+        //                             setState(() {
+        //                            nameText    =   value;
+        //                             });
                       
-                                   },
-                                    decoration: InputDecoration(
-                      hintText: "Enter Name",
-                      prefixIcon: Icon(Icons.person),
-                                    ),
-                                    validator: (input) =>
-                        !input!.contains("") ? "Please enter a valid Name" : null,
-                                    onSaved: (input) => _name = input!,
-                                  ),
-                    ),
-                    SizedBox(height: 20,),
+        //                            },
+        //                             decoration: InputDecoration(
+        //               hintText: "Enter Name",
+        //               prefixIcon: Icon(Icons.person),
+        //                             ),
+        //                             validator: (input) =>
+        //                 !input!.contains("") ? "Please enter a valid Name" : null,
+        //                             onSaved: (input) => _name = input!,
+        //                           ),
+        //             ),
+        //             SizedBox(height: 20,),
                 Container(
                    decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -122,7 +121,8 @@ class _SignUpState extends State<SignUp> {
       try {
        
          
-         authService.signUp(emailText!, passwordText!,nameText!);
+        //  authService.login(emailText!, passwordText!);
+         authService.checksIFSignUp(emailText!, passwordText!);
         
       } catch (e) {
   Get.snackbar("Error", "Error signing up");
@@ -140,20 +140,19 @@ class _SignUpState extends State<SignUp> {
           onPrimary: Colors.white,
            minimumSize: Size(150, 40)
         ),
-        child: Text('Sign UP'),
+        child: Text('Login'),
           ),
            SizedBox(height: 20,),
-           GestureDetector(
-            onTap: () {
-              
-              Get.to(LoginScreen());
-            },
-            child: Text("Already have account ? Login in",style: TextStyle(color: Colors.yellow),))
+          //  GestureDetector(
+          //   onTap: () {
+          //     Get.to(SignUp());
+          //   },
+          //   child: Text("Want to Sign up ? ",style: TextStyle(color: Colors.yellow),))
           ],),),
       ),);
       
   }
-  //   void _submit() async {
+    void _submit() async {
  
-  // }
+  }
 }
