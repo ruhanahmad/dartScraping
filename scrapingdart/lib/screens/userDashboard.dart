@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scrapingdart/AuthFirebase/auth.dart';
 
 import 'package:scrapingdart/main.dart';
 import 'package:scrapingdart/screens/adminPanel.dart';
@@ -20,6 +21,7 @@ class UserDashboard extends StatefulWidget {
 }
 
 class _UserDashboardState extends State<UserDashboard> {
+  AuthService authService = Get.put(AuthService());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,7 +52,8 @@ SizedBox(height: 20,),
           children: [
           
           GestureDetector(
-            onTap: () {
+            onTap: () async{
+          await  authService.getProfileData();
          Get.to( UserProfile()) ;  
             },
             child: Container( 

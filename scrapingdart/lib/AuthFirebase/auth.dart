@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrapingdart/screens/adminPanel.dart';
 import 'package:scrapingdart/screens/adminScreen.dart';
@@ -8,6 +9,56 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../screens/userDashboard.dart';
 class AuthService extends GetxController {
+    User? userId;
+  getIDo() async {
+    userId = await FirebaseAuth.instance.currentUser;
+    update();
+    print(userId);
+  }
+  dynamic valuess;
+  var namess;
+  var emailsss;
+  Future getProfileData() async {
+    await getIDo();
+    // EasyLoading.show();
+    // welcome = Welcome();
+    // accountss  = Account();
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId!.uid)
+        .get()
+        .then((DocumentSnapshot value) {
+      valuess = value.data();
+      print(valuess);
+      emailsss = valuess['email'];
+      namess = valuess["name"];
+
+
+      // accountsList.add(Account.fromJson(value));
+      print(valuess);
+      update();
+    });
+    // EasyLoading.dismiss();
+  }
+  var whistle;
+    Future checksIFaaa() async {
+     await getIDo();
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId!.uid)
+        .get()
+        .then((DocumentSnapshot value) {
+       whistle = value.data();
+
+      //  var id = whistle.first.id;
+      // if (whistle == null) {
+      //   Get.to(CountryField());
+      // } else {
+      //   Get.to(HomePage());
+      // }
+    });
+  }
+  String? emailv;
   final FirebaseAuth _auth = FirebaseAuth.instance;
    Future   adminSignin(String email,String password)async{
         try {
@@ -27,12 +78,15 @@ class AuthService extends GetxController {
       }
     }
 
-  }
+   }
+   
 
 
     Future  checksIFLogin(String email,String password) async {
     // have   =  "admin";
-    update();
+          
+
+
     await FirebaseFirestore.instance
         .collection("users")
         .where('email', isEqualTo:email)
@@ -118,9 +172,10 @@ class AuthService extends GetxController {
       return e.toString();
     }
   }
-
+TextEditingController emailvv =  TextEditingController();
   // Login with email and password
   Future<String?> login(String email, String password) async {
+    //  emailv    =    email;
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
